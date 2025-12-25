@@ -1,0 +1,107 @@
+body {
+    background-image: url("heart-made-with-colorful-roses.jpg");
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    min-height: 90vh;
+    background-color: #fff9fb;
+}
+
+
+h1 {
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.main {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+form {
+    background-color: transparent;
+    height: 500px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 10px;
+    margin-top: 0;
+    background: transparent;
+}
+
+textarea,
+.place {
+    border: 2px solid black;
+    border-radius: 5px;
+    outline: none;
+}
+textarea:focus,
+.place:focus {
+    border-color: black;
+}
+
+
+
+input {
+    padding: 8px;
+    height: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+#submit {
+    background-color: #fff9fb;
+    transition: 0.3s;
+}
+
+#submit:hover {
+    background-color: pink;
+    color: white;
+}
+
+
+
+
+@media (max-width: 768px) {
+
+    body {
+        background-position: top;
+        background-size: cover;
+        min-height: 100vh;
+    }
+
+    h1 {
+        margin-left: 0;
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .main {
+        margin-left: 0;
+        margin-top: 15px;
+        justify-content: center;
+    }
+
+    form {
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
+        padding: 15px;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+
+    #successMsg {
+        font-size: 14px;
+        text-align: center;
+    }
+}
