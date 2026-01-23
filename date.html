@@ -1,65 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="date.css">
-    <link rel="icon" type="image/png" href="logo.png">
-</head>
+    <link rel="stylesheet" href="date.css" />
+    <link rel="icon" type="image/png" href="logo.png" />
+  </head>
 
-<body>
-    <h1 class="cute-text">Hello Cutei Pie </h1>
+  <body>
+    <h1 class="cute-text">Hello Cutei Pie</h1>
     <div class="main">
-        <form action="https://formspree.io/f/mnjaedeb" id="data" method="post">
+      <form action="https://formspree.io/f/mnjaedeb" id="data" method="post">
+        <label>Enter The Name :</label>
+        <input type="text" class="name" name="name" />
 
-            <label>Enter The Name :</label>
-            <input type="text" class="name" name="name">
+        <label>Enter The Date :</label>
+        <input type="date" class="data" name="date" min="" />
 
-            <label>Enter The Date :</label>
-            <input type="date" class="data" name="date" min="">
+        <label>Enter The Time :</label>
+        <input type="time" class="time" name="time" />
 
-            <label>Enter The Time :</label>
-            <input type="time" class="time" name="time">
+        <label>Select the Place :</label>
+        <select class="place" name="place" style="height: 30px">
+          <option value="India Gate">India Gate</option>
+          <option value="Hauz Khas Village">Hauz Khas Village</option>
+          <option value="Lodhi Garden">Lodhi Garden</option>
+          <option value="Connaught Place (CP)">Connaught Place (CP)</option>
+          <option value="Garden of Five Senses">Garden of Five Senses</option>
+          <option value="Mehrauli Archaeological Park">
+            Mehrauli Archaeological Park
+          </option>
+          <option value="Sundar Nursery">Sundar Nursery</option>
+          <option value="DLF Cyber Hub">DLF Cyber Hub</option>
+          <option value="Worlds of Wonder">Worlds of Wonder</option>
+          <option value="Qutub Minar Complex">Qutub Minar Complex</option>
+          <option value="Kingdom of Dreams">Kingdom of Dreams</option>
+          <option value="Okhla Bird Sanctuary">Okhla Bird Sanctuary</option>
+          <option value="Other">Other</option>
+        </select>
 
-            <label>Select the Place :</label>
-            <select class="place" name="place" style="height: 30px;">
-                <option value="India Gate">India Gate</option>
-                <option value="Hauz Khas Village">Hauz Khas Village</option>
-                <option value="Lodhi Garden">Lodhi Garden</option>
-                <option value="Connaught Place (CP)">Connaught Place (CP)</option>
-                <option value="Garden of Five Senses">Garden of Five Senses</option>
-                <option value="Mehrauli Archaeological Park">Mehrauli Archaeological Park</option>
-                <option value="Sundar Nursery">Sundar Nursery</option>
-                <option value="DLF Cyber Hub">DLF Cyber Hub</option>
-                <option value="Worlds of Wonder">Worlds of Wonder</option>
-                <option value="Qutub Minar Complex">Qutub Minar Complex</option>
-                <option value="Kingdom of Dreams">Kingdom of Dreams</option>
-                <option value="Okhla Bird Sanctuary">Okhla Bird Sanctuary</option>
-                <option value="Other">Other</option>
-            </select>
+        <label>Enter The Message :</label>
+        <textarea
+          class="message"
+          name="message"
+          style="height: 40px"
+        ></textarea>
 
-            <label>Enter The Message :</label>
-            <textarea class="message" name="message" style="height: 40px;"></textarea>
+        <input type="submit" id="submit" value="Submit" style="height: auto" />
 
-            <input type="submit" id="submit" value="Submit" style="height: auto;">
-
-            <p id="successMsg" style="display:none; color:green; font-size:18px; text-align:center;">
-                Form submitted successfully!
-            </p>
-
-
-
-
-        </form>
-
-
-
-
-
+        <p
+          id="successMsg"
+          style="
+            display: none;
+            color: green;
+            font-size: 18px;
+            text-align: center;
+          "
+        >
+          Form submitted successfully!
+        </p>
+      </form>
     </div>
     <script src="date.js"></script>
-</body>
-
+  </body>
 </html>
