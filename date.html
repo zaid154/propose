@@ -1,67 +1,222 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="date.css" />
-    <link rel="icon" type="image/png" href="logo.png" />
-  </head>
 
-  <body>
-    <h1 class="cute-text">Hello Cutei Pie</h1>
-    <div class="main">
-      <form action="https://formspree.io/f/mnjaedeb" id="data" method="post">
-        <label>Enter The Name :</label>
-        <input type="text" class="name" name="name" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    body {
+      background-image: url("./Pictures/Heart\ of\ roses.jpg");
+      background-size: contain;
+      background-position: right;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      background-color: #fff9fb;
+      /* padding-top: 20px; */
+      margin-top: 0;
+    }
 
-        <label>Enter The Date :</label>
-        <input type="date" class="data" name="date" min="" />
 
-        <label>Enter The Time :</label>
-        <input type="time" class="time" name="time" />
+    h1 {
+      margin-left: 50px;
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
 
-        <label>Select the Place :</label>
-        <select class="place" name="place" style="height: 30px">
-          <option value="India Gate">India Gate</option>
-          <option value="Hauz Khas Village">Hauz Khas Village</option>
-          <option value="Lodhi Garden">Lodhi Garden</option>
-          <option value="Connaught Place (CP)">Connaught Place (CP)</option>
-          <option value="Garden of Five Senses">Garden of Five Senses</option>
-          <option value="Mehrauli Archaeological Park">
-            Mehrauli Archaeological Park
-          </option>
-          <option value="Sundar Nursery">Sundar Nursery</option>
-          <option value="DLF Cyber Hub">DLF Cyber Hub</option>
-          <option value="Worlds of Wonder">Worlds of Wonder</option>
-          <option value="Qutub Minar Complex">Qutub Minar Complex</option>
-          <option value="Kingdom of Dreams">Kingdom of Dreams</option>
-          <option value="Okhla Bird Sanctuary">Okhla Bird Sanctuary</option>
-          <option value="Other">Other</option>
-        </select>
+    .main {
+      display: flex;
+      justify-content: left;
+      align-items: left;
+      margin-left: 50px;
+      margin-top: 20px;
+    }
 
-        <label>Enter The Message :</label>
-        <textarea
-          class="message"
-          name="message"
-          style="height: 40px"
-        ></textarea>
+    form {
+      background-color: transparent;
+      height: 500px;
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      border-radius: 10px;
+      margin-top: 0;
+      background: transparent;
+    }
 
-        <input type="submit" id="submit" value="Submit" style="height: auto" />
+    textarea,
+    .place {
+      border: 2px solid black;
+      border-radius: 5px;
+      outline: none;
+    }
 
-        <p
-          id="successMsg"
-          style="
+    textarea:focus,
+    .place:focus {
+      border-color: black;
+    }
+
+
+
+    input {
+      padding: 8px;
+      height: 10px;
+      font-size: 14px;
+      border-radius: 5px;
+    }
+
+    #submit {
+      background-color: #fff9fb;
+      transition: 0.3s;
+    }
+
+    #submit:hover {
+      background-color: pink;
+      color: white;
+    }
+
+
+
+
+    @media (max-width: 768px) {
+
+      body {
+        background-position: top;
+        background-size: cover;
+        min-height: 100vh;
+      }
+
+      h1 {
+        margin-left: 0;
+        text-align: center;
+        margin-top: 15px;
+      }
+
+      .main {
+        margin-left: 0;
+        margin-top: 15px;
+        justify-content: center;
+      }
+
+      form {
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
+        padding: 15px;
+      }
+
+      input,
+      select,
+      textarea {
+        font-size: 16px;
+      }
+
+      #successMsg {
+        font-size: 14px;
+        text-align: center;
+      }
+    }
+  </style>
+  <link rel="icon" type="image/png" href="./Pictures/logo.png" />
+</head>
+
+<body>
+  <h1 class="cute-text">Hello Cutei Pie</h1>
+  <div class="main">
+    <form action="https://formspree.io/f/mnjaedeb" id="data" method="post">
+      <label>Enter The Name :</label>
+      <input type="text" class="name" name="name" />
+
+      <label>Enter The Date :</label>
+      <input type="date" class="data" name="date" min="" />
+
+      <label>Enter The Time :</label>
+      <input type="time" class="time" name="time" />
+
+      <label>Select the Place :</label>
+      <select class="place" name="place" style="height: 30px">
+        <option value="India Gate">India Gate</option>
+        <option value="Hauz Khas Village">Hauz Khas Village</option>
+        <option value="Lodhi Garden">Lodhi Garden</option>
+        <option value="Connaught Place (CP)">Connaught Place (CP)</option>
+        <option value="Garden of Five Senses">Garden of Five Senses</option>
+        <option value="Mehrauli Archaeological Park">
+          Mehrauli Archaeological Park
+        </option>
+        <option value="Sundar Nursery">Sundar Nursery</option>
+        <option value="DLF Cyber Hub">DLF Cyber Hub</option>
+        <option value="Worlds of Wonder">Worlds of Wonder</option>
+        <option value="Qutub Minar Complex">Qutub Minar Complex</option>
+        <option value="Kingdom of Dreams">Kingdom of Dreams</option>
+        <option value="Okhla Bird Sanctuary">Okhla Bird Sanctuary</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label>Enter The Message :</label>
+      <textarea class="message" name="message" style="height: 40px"></textarea>
+
+      <input type="submit" id="submit" value="Submit" style="height: auto" />
+
+      <p id="successMsg" style="
             display: none;
             color: green;
             font-size: 18px;
             text-align: center;
-          "
-        >
-          Form submitted successfully!
-        </p>
-      </form>
-    </div>
-    <script src="date.js"></script>
-  </body>
+          ">
+        Form submitted successfully!
+      </p>
+    </form>
+  </div>
+  <script>
+    let form = document.querySelector("#data")
+    let names = document.querySelector(".name")
+    let date = document.querySelector(".data")
+    let time = document.querySelector(".time")
+    let place = document.querySelector(".place")
+    let message = document.querySelector(".message")
+    let successMsg = document.querySelector("#successMsg")
+    let today = new Date().toISOString().split("T")[0];
+    date.setAttribute("min", today)
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (
+        names.value.trim() === "" || date.value === "" || time.value === "" || place.value === "" || message.value.trim() === "") {
+        alert("All fields are compulsory");
+        return;
+      }
+      if (date.value < today) {
+        alert("Please select a valid future date");
+        return;
+      }
+
+
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: {
+          "Accept": "application/json"
+        }
+      })
+        .then(function (res) {
+          if (res.ok) {
+            form.reset();
+            successMsg.style.display = "block";
+
+            setTimeout(function () {
+              successMsg.style.display = "none"
+            }, 5000);
+          } else {
+            alert("Something went wrong");
+          }
+        })
+        .catch(function () {
+          alert("Network error");
+        });
+    });
+
+  </script>
+</body>
+
 </html>
