@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import PageWrapper from '../components/ui/PageWrapper'
 import Section from '../components/ui/Section'
@@ -76,8 +76,6 @@ const LetterPart = (props) => {
 const CinemaPart = (props) => {
   const images = getGalleryImages()
   const [index, setIndex] = useState(0)
-  const [playing, setPlaying] = useState(false)
-  const audioRef = useRef(null)
 
   useEffect(() => {
     if (images.length === 0) return
@@ -88,19 +86,6 @@ const CinemaPart = (props) => {
 
     return () => clearInterval(timer)
   }, [images.length])
-
-  useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
-
-    audio.volume = 0.45
-
-    if (playing) {
-      audio.play().catch((err) => console.log(err))
-    } else {
-      audio.pause()
-    }
-  }, [playing])
 
   if (images.length === 0) {
     return (
@@ -151,16 +136,6 @@ const CinemaPart = (props) => {
         </AnimatePresence>
 
         <div className="absolute inset-0 bg-black/30" />
-
-        <div className="absolute right-5 top-5">
-          <button
-            type="button"
-            onClick={() => setPlaying(!playing)}
-            className="rounded-full border border-white bg-black/50 px-4 py-2 text-xs text-white hover:bg-black/70"
-          >
-            {playing ? 'Pause Music' : 'Play Music'}
-          </button>
-        </div>
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-5 pb-12 text-center">
           <p className="font-script text-5xl text-white">Us, in moments.</p>
