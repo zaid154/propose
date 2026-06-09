@@ -1,25 +1,15 @@
-export default function Card({
-  children,
-  className = '',
-  padding = 'default',
-  as: Tag = 'div',
-}) {
-  const paddings = {
-    none: '',
-    sm: 'p-5 sm:p-6',
-    default: 'p-6 sm:p-9',
-    lg: 'p-8 sm:p-12',
-  }
+const Card = (props) => {
+  const padding = props.padding || 'default'
+  const className = props.className || ''
 
-  return (
-    <Tag
-      className={[
-        'relative rounded-2xl border border-ivory/10 bg-white/[0.03] backdrop-blur-md shadow-soft',
-        paddings[padding],
-        className,
-      ].join(' ')}
-    >
-      {children}
-    </Tag>
-  )
+  let paddingClass = 'p-6'
+  if (padding === 'none') paddingClass = ''
+  if (padding === 'sm') paddingClass = 'p-4'
+  if (padding === 'lg') paddingClass = 'p-8'
+
+  const cardClass = `bg-white border border-pink-100 rounded-lg shadow-md ${paddingClass} ${className}`
+
+  return <div className={cardClass}>{props.children}</div>
 }
+
+export default Card

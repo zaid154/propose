@@ -1,58 +1,52 @@
-import { useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 
-const COLORS = ['#B76E79', '#D89AA3', '#E9D8B4', '#FFB178', '#F7EFE3']
+const colors = ['#db2777', '#ec4899', '#f472b6', '#fbcfe8', '#fce7f3']
 
-function randomBetween(min, max) {
+function getRandom(min, max) {
   return Math.random() * (max - min) + min
 }
 
-export default function Confetti({ count = 90, active = true }) {
-  const pieces = useMemo(() => {
-    return Array.from({ length: count }).map(() => ({
-      left: `${randomBetween(0, 100)}%`,
-      delay: randomBetween(0, 0.6),
-      duration: randomBetween(2.4, 4.2),
-      rotate: randomBetween(-180, 180),
-      rotateEnd: randomBetween(-540, 540),
-      drift: randomBetween(-80, 80),
-      color: COLORS[Math.floor(Math.random() * COLORS.length)],
-      size: randomBetween(6, 12),
-      shape: Math.random() > 0.5 ? 'rect' : 'circle',
-    }))
+const Confetti = (props) => {
+  const count = props.count || 90
+  const active = props.active !== false
+  const [pieces, setPieces] = useState([])
+
+  useEffect(() => {
+    const list = []
+    for (let i = 0; i < count; i++) {
+      list.push({
+        left: getRandom(0, 100),
+        delay: getRandom(0, 0.6),
+        duration: getRandom(2.4, 4.2),
+        color: colors[Math.floor(Math.random() * colors.length)],
+        size: getRandom(6, 12),
+      })
+    }
+    setPieces(list)
   }, [count])
 
-  if (!active) return null
+  if (!active) {
+    return null
+  }
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[80] overflow-hidden">
-      {pieces.map((p, i) => (
-        <motion.span
-          key={i}
-          initial={{ y: -40, x: 0, rotate: p.rotate, opacity: 0 }}
-          animate={{
-            y: ['-5%', '110vh'],
-            x: [0, p.drift],
-            rotate: [p.rotate, p.rotateEnd],
-            opacity: [0, 1, 1, 0.9, 0],
-          }}
-          transition={{
-            duration: p.duration,
-            delay: p.delay,
-            ease: 'easeIn',
-          }}
+    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
+      {pieces.map((piece, index) => (
+        <span
+          key={index}
+          className="confetti-piece"
           style={{
-            position: 'absolute',
-            top: 0,
-            left: p.left,
-            width: p.size,
-            height: p.size,
-            background: p.color,
-            borderRadius: p.shape === 'circle' ? '50%' : '2px',
-            boxShadow: `0 0 8px ${p.color}55`,
+            left: `${piece.left}%`,
+            width: `${piece.size}px`,
+            height: `${piece.size}px`,
+            background: piece.color,
+            animationDuration: `${piece.duration}s`,
+            animationDelay: `${piece.delay}s`,
           }}
         />
       ))}
     </div>
   )
 }
+
+export default Confetti

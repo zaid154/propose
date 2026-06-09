@@ -1,19 +1,17 @@
-export default function Section({
-  children,
-  size = 'default',
-  className = '',
-  as: Tag = 'section',
-}) {
-  const widths = {
-    sm: 'max-w-2xl',
-    default: 'max-w-5xl',
-    lg: 'max-w-6xl',
-    full: 'max-w-none',
-  }
+const Section = (props) => {
+  const size = props.size || 'default'
+  const className = props.className || ''
+
+  let widthClass = 'max-w-5xl'
+  if (size === 'sm') widthClass = 'max-w-2xl'
+  if (size === 'lg') widthClass = 'max-w-6xl'
+  if (size === 'full') widthClass = 'max-w-none'
 
   return (
-    <Tag className={`relative w-full ${className}`}>
-      <div className={`mx-auto px-5 sm:px-8 ${widths[size]}`}>{children}</div>
-    </Tag>
+    <section className={`relative w-full ${className}`}>
+      <div className={`mx-auto px-4 sm:px-8 ${widthClass}`}>{props.children}</div>
+    </section>
   )
 }
+
+export default Section

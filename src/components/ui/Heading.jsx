@@ -1,30 +1,26 @@
-const variants = {
-  display:
-    'font-display italic text-ivory text-[clamp(2.75rem,7vw,5.5rem)] leading-[1.05] tracking-tight',
-  script:
-    'font-script text-roseGoldLight text-[clamp(3rem,9vw,7rem)] leading-[1.05]',
-  section:
-    'font-display italic text-ivory text-[clamp(1.85rem,3.5vw,2.75rem)] leading-tight',
-  eyebrow:
-    'font-eyebrow uppercase tracking-[0.45em] text-champagne/80 text-xs sm:text-sm',
+const variantClasses = {
+  display: 'font-display italic text-gray-800 text-4xl sm:text-5xl lg:text-6xl leading-tight',
+  script: 'font-script text-pink-600 text-5xl sm:text-6xl leading-tight',
+  section: 'font-display italic text-gray-800 text-2xl sm:text-3xl leading-tight',
+  eyebrow: 'font-eyebrow uppercase tracking-widest text-pink-500 text-xs sm:text-sm',
 }
 
-export default function Heading({
-  variant = 'section',
-  as,
-  className = '',
-  children,
-}) {
-  const fallbackTag =
-    variant === 'eyebrow'
-      ? 'span'
-      : variant === 'display' || variant === 'script'
-        ? 'h1'
-        : 'h2'
+const Heading = (props) => {
+  const variant = props.variant || 'section'
+  const className = props.className || ''
 
-  const Tag = as ?? fallbackTag
+  let Tag = 'h2'
+  if (props.as) {
+    Tag = props.as
+  } else if (variant === 'eyebrow') {
+    Tag = 'span'
+  } else if (variant === 'display' || variant === 'script') {
+    Tag = 'h1'
+  }
 
-  return (
-    <Tag className={`${variants[variant]} ${className}`}>{children}</Tag>
-  )
+  const headingClass = `${variantClasses[variant]} ${className}`
+
+  return <Tag className={headingClass}>{props.children}</Tag>
 }
+
+export default Heading

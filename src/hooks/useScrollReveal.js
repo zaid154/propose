@@ -1,31 +1,41 @@
-export const revealVariants = {
+// Animation for scroll reveal
+export function getRevealAnimation() {
+  return {
+    initial: 'hidden',
+    whileInView: 'show',
+    viewport: { once: true, amount: 0.2 },
+    variants: {
+      hidden: { opacity: 0, y: 24 },
+      show: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.7 },
+      },
+    },
+  }
+}
+
+// Animation for staggered children
+export function getStaggerAnimation() {
+  return {
+    initial: 'hidden',
+    whileInView: 'show',
+    viewport: { once: true, amount: 0.2 },
+    variants: {
+      hidden: {},
+      show: {
+        transition: { staggerChildren: 0.15 },
+      },
+    },
+  }
+}
+
+// Single item variant for stagger lists
+export const itemVariant = {
   hidden: { opacity: 0, y: 24 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.22, 0.61, 0.36, 1] },
+    transition: { duration: 0.7 },
   },
-}
-
-export const staggerContainer = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.15 } },
-}
-
-export function useScrollReveal() {
-  return {
-    initial: 'hidden',
-    whileInView: 'show',
-    viewport: { once: true, amount: 0.2 },
-    variants: revealVariants,
-  }
-}
-
-export function useStaggerContainer() {
-  return {
-    initial: 'hidden',
-    whileInView: 'show',
-    viewport: { once: true, amount: 0.2 },
-    variants: staggerContainer,
-  }
 }

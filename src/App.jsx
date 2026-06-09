@@ -9,15 +9,18 @@ import DatePlanner from './pages/DatePlanner'
 import Surprise from './pages/Surprise'
 import { routes } from './routes'
 
-function ScrollToTop() {
+// Scroll to top when page changes
+const ScrollToTop = () => {
   const { pathname } = useLocation()
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' })
+
+  useEffect(function () {
+    window.scrollTo({ top: 0, behavior: 'auto' })
   }, [pathname])
+
   return null
 }
 
-export default function App() {
+const App = () => {
   const location = useLocation()
 
   return (
@@ -36,3 +39,5 @@ export default function App() {
     </AppShell>
   )
 }
+
+export default App

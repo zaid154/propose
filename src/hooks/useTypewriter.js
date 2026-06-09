@@ -1,64 +1,63 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export function useTypewriter({
-  lines = [],
-  charDelay = 38,
-  lineDelay = 600,
-  enabled = true,
-  onComplete,
-} = {}) {
-  const [typedLines, setTypedLines] = useState([])
-  const [isComplete, setIsComplete] = useState(false)
-  const completeRef = useRef(onComplete)
-  completeRef.current = onComplete
+// Typewriter effect for letter text
+export function useTypewriter(options) {
+  const textLines = options.lines || []
+  const charDelay = options.charDelay || 38
+  const lineDelay = options.lineDelay || 600
+  const enabled = options.enabled !== false
 
-  useEffect(() => {
+  const [lines, setLines] = useState([])
+  const [done, setDone] = useState(false)
+
+  useEffect(function () {
     if (!enabled) return
-    if (!lines || lines.length === 0) return
+    if (!textLines || textLines.length === 0) return
 
     let cancelled = false
     let lineIndex = 0
     let charIndex = 0
     let currentLine = ''
-    let timer
+    let timer = null
 
-    const tick = () => {
+    function tick() {
       if (cancelled) return
 
-      if (lineIndex >= lines.length) {
-        setIsComplete(true)
-        completeRef.current?.()
+      if (lineIndex >= textLines.length) {
+        setDone(true)
         return
       }
 
-      const target = lines[lineIndex]
+      const target = textLines[lineIndex]
 
       if (charIndex < target.length) {
-        currentLine += target[charIndex]
-        charIndex += 1
-        setTypedLines((prev) => {
+        currentLine = currentLine + target[charIndex]
+        charIndex = charIndex + 1
+
+        setLines(function (prev) {
           const next = prev.slice(0, lineIndex)
           next.push(currentLine)
           return next
         })
+
         timer = setTimeout(tick, charDelay)
       } else {
-        lineIndex += 1
+        lineIndex = lineIndex + 1
         charIndex = 0
         currentLine = ''
         timer = setTimeout(tick, lineDelay)
       }
     }
 
-    setTypedLines([])
-    setIsComplete(false)
+    setLines([])
+    setDone(false)
     timer = setTimeout(tick, 350)
 
-    return () => {
+    return function () {
       cancelled = true
       if (timer) clearTimeout(timer)
     }
-  }, [lines, charDelay, lineDelay, enabled])
+  }, [textLines, charDelay, lineDelay, enabled])
 
-  return { typedLines, isComplete }
+  return { lines, done }
 }

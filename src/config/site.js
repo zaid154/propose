@@ -1,64 +1,31 @@
-// import defaultMusic from '../assets/music.mp3'
-
-function readEnvString(key, fallback) {
-  const v = import.meta.env[key]
-
-  if (typeof v === 'string' && v.trim() !== '') {
-    return v
+// Get env value or use default
+function getEnvValue(key, defaultValue) {
+  const value = import.meta.env[key]
+  if (typeof value === 'string' && value.trim() !== '') {
+    return value
   }
-
-  return fallback
+  return defaultValue
 }
 
 export const site = {
-  siteTitle: readEnvString('VITE_SITE_TITLE', 'Only For You'),
-
-  myName: readEnvString('VITE_MY_NAME', 'Your Name'),
-
-  herName: readEnvString('VITE_HER_NAME', 'Her Name'),
+  siteTitle: getEnvValue('VITE_SITE_TITLE', 'Only For You'),
+  myName: getEnvValue('VITE_MY_NAME', 'Your Name'),
+  herName: getEnvValue('VITE_HER_NAME', 'Her Name'),
 
   home: {
-    eyebrow: readEnvString(
-      'VITE_HOME_EYEBROW',
-      'FOR'
-    ),
-
-    tagline: readEnvString(
-      'VITE_HOME_TAGLINE',
-      'A little story I made, just for you.'
-    ),
-
-    cta: readEnvString(
-      'VITE_HOME_CTA',
-      'Begin'
-    ),
+    eyebrow: getEnvValue('VITE_HOME_EYEBROW', 'FOR'),
+    tagline: getEnvValue('VITE_HOME_TAGLINE', 'A little story I made, just for you.'),
+    cta: getEnvValue('VITE_HOME_CTA', 'Begin'),
   },
 
-  homeTagline: readEnvString(
-    'VITE_HOME_TAGLINE',
-    'A little something I made, just for you.'
-  ),
+  homeTagline: getEnvValue('VITE_HOME_TAGLINE', 'A little something I made, just for you.'),
 
-  proposalQuestion: readEnvString(
-    'VITE_PROPOSAL_QUESTION',
-    'Will you be my partner for life?'
-  ),
-
-  proposalYesReply: readEnvString(
-    'VITE_PROPOSAL_YES_REPLY',
-    "You've made me the happiest person."
-  ),
+  proposalQuestion: getEnvValue('VITE_PROPOSAL_QUESTION', 'Will you be my partner for life?'),
+  proposalYesReply: getEnvValue('VITE_PROPOSAL_YES_REPLY', "You've made me the happiest person."),
 
   formspree: {
-    proposalUrl: readEnvString(
-      'VITE_FORMSPREE_PROPOSAL_URL',
-      'https://formspree.io/f/mreznqnk'
-    ),
-
-    dateUrl: readEnvString(
-      'VITE_FORMSPREE_DATE_URL',
-      'https://formspree.io/f/mnjaedeb'
-    ),
+    proposalUrl: getEnvValue('VITE_FORMSPREE_PROPOSAL_URL', 'https://formspree.io/f/mreznqnk'),
+    dateUrl: getEnvValue('VITE_FORMSPREE_DATE_URL', 'https://formspree.io/f/mnjaedeb'),
   },
 
   storyParagraphs: [
@@ -70,28 +37,16 @@ export const site = {
     'Mujhe jo humare beech hai woh bohot important lagta hai. Main bas tumhare saath rehna chahta hoon, aaj bhi aur aage bhi.',
   ],
 
-letterLines: [
-  'Hey,',
-  'I made this little surprise for you.',
-  'Because you are someone special to me.',
-  'And I wanted you to know that.',
-],
+  letterLines: [
+    'Hey,',
+    'I made this little surprise for you.',
+    'Because you are someone special to me.',
+    'And I wanted you to know that.',
+  ],
 
   surprise: {
-    finalMessage: readEnvString(
-      'VITE_SURPRISE_FINAL_MESSAGE',
-      'Today, tomorrow, always — I choose you.'
-    ),
-
-    signature: readEnvString(
-      'VITE_SURPRISE_SIGNATURE',
-      'Always yours,'
-    ),
-
-    // musicUrl: readEnvString(
-    //   'VITE_SURPRISE_MUSIC_URL',
-    //   defaultMusic
-    // ),
+    finalMessage: getEnvValue('VITE_SURPRISE_FINAL_MESSAGE', 'Today, tomorrow, always — I choose you.'),
+    signature: getEnvValue('VITE_SURPRISE_SIGNATURE', 'Always yours,'),
   },
 
   noButtonMessages: [

@@ -6,29 +6,26 @@ import Button from '../components/ui/Button'
 import Divider from '../components/ui/Divider'
 import FloatingHearts from '../components/effects/FloatingHearts'
 import { site } from '../config/site'
-import { useScrollReveal, useStaggerContainer } from '../hooks/useScrollReveal'
+import { getRevealAnimation, getStaggerAnimation } from '../hooks/useScrollReveal'
 
-function Hero() {
+const Hero = () => {
   return (
-    <section className="relative flex min-h-[calc(100vh-64px)] items-center overflow-hidden">
+    <section className="relative flex min-h-screen items-center overflow-hidden">
       <FloatingHearts />
       <Section className="py-16 sm:py-24">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.22, 0.61, 0.36, 1] }}
+          transition={{ duration: 0.5 }}
           className="mx-auto max-w-3xl text-center"
         >
           <Heading variant="eyebrow">{site.home.eyebrow}</Heading>
-
           <Heading variant="script" className="mt-3 sm:mt-4">
             {site.herName}
           </Heading>
-
-          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-ivory/75 sm:text-lg">
+          <p className="mx-auto mt-6 max-w-xl text-base text-gray-600 sm:text-lg">
             {site.home.tagline}
           </p>
-
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Button to="/memories" variant="primary">
               {site.home.cta}
@@ -37,12 +34,9 @@ function Hero() {
               Skip ahead
             </Button>
           </div>
-
-          <div className="mt-16 flex flex-col items-center gap-3 text-ivory/40">
-            <span className="text-[10px] uppercase tracking-[0.5em]">
-              scroll
-            </span>
-            <span className="block h-10 w-px bg-gradient-to-b from-ivory/40 to-transparent" />
+          <div className="mt-16 flex flex-col items-center gap-3 text-gray-400">
+            <span className="text-xs uppercase tracking-widest">scroll</span>
+            <span className="block h-10 w-px bg-pink-200" />
           </div>
         </motion.div>
       </Section>
@@ -50,64 +44,68 @@ function Hero() {
   )
 }
 
-function StoryCard({ text, index }) {
-  const isEven = index % 2 === 0
-  const reveal = useScrollReveal()
+const StoryCard = (props) => {
+  const text = props.text
+  const index = props.index
+  const reveal = getRevealAnimation()
+
+  let numberClass = 'sm:col-span-3 flex sm:block'
+  let textClass = 'sm:col-span-9'
+
+  if (index % 2 !== 0) {
+    numberClass = 'sm:col-span-3 flex sm:block sm:order-2 sm:text-right'
+    textClass = 'sm:col-span-9 sm:order-1'
+  }
+
+  const chapterNumber = String(index + 1).padStart(2, '0')
 
   return (
     <motion.article
-      {...reveal}
-      className={[
-        'relative grid gap-6 sm:grid-cols-12 sm:gap-10',
-        'py-8 sm:py-12',
-      ].join(' ')}
+      initial={reveal.initial}
+      whileInView={reveal.whileInView}
+      viewport={reveal.viewport}
+      variants={reveal.variants}
+      className="relative grid gap-6 py-8 sm:grid-cols-12 sm:gap-10 sm:py-12"
     >
-      <div
-        className={[
-          'sm:col-span-3 flex sm:block',
-          isEven ? '' : 'sm:order-2 sm:text-right',
-        ].join(' ')}
-      >
+      <div className={numberClass}>
         <div className="flex items-baseline gap-2">
-          <span className="font-display italic text-roseGoldLight text-3xl sm:text-4xl">
-            {String(index + 1).padStart(2, '0')}
+          <span className="font-display text-3xl italic text-pink-600 sm:text-4xl">
+            {chapterNumber}
           </span>
-          <span className="text-xs uppercase tracking-[0.4em] text-champagne/70">
-            chapter
-          </span>
+          <span className="text-xs uppercase tracking-widest text-pink-500">chapter</span>
         </div>
       </div>
-
-      <div className={[
-        'sm:col-span-9',
-        isEven ? '' : 'sm:order-1',
-      ].join(' ')}>
-        <p className="font-display text-lg italic leading-relaxed text-ivory/90 sm:text-2xl">
-          {text}
-        </p>
+      <div className={textClass}>
+        <p className="font-display text-lg italic text-gray-800 sm:text-2xl">{text}</p>
       </div>
     </motion.article>
   )
 }
 
-function StorySection() {
-  const stagger = useStaggerContainer()
+const StorySection = () => {
+  const stagger = getStaggerAnimation()
 
   return (
-    <Section className="py-20 sm:py-28">
+    <Section className="pt-12 pb-12">
       <div className="mx-auto max-w-3xl text-center">
         <Heading variant="eyebrow">Our story</Heading>
         <Heading variant="section" className="mt-3">
           Six quiet lines, only for you.
         </Heading>
-        <p className="mt-3 text-ivory/60">
+        <p className="mt-3 text-gray-600">
           Some feelings are simple — but they mean everything.
         </p>
       </div>
 
-      <motion.div {...stagger} className="mx-auto mt-12 max-w-4xl divide-y divide-ivory/10">
-        {site.storyParagraphs.map((text, idx) => (
-          <StoryCard key={idx} text={text} index={idx} />
+      <motion.div
+        initial={stagger.initial}
+        whileInView={stagger.whileInView}
+        viewport={stagger.viewport}
+        variants={stagger.variants}
+        className="mx-auto mt-12 max-w-4xl divide-y divide-pink-100"
+      >
+        {site.storyParagraphs.map((text, index) => (
+          <StoryCard key={index} text={text} index={index} />
         ))}
       </motion.div>
 
@@ -121,7 +119,7 @@ function StorySection() {
   )
 }
 
-export default function Home() {
+const Home = () => {
   return (
     <PageWrapper>
       <Hero />
@@ -129,3 +127,5 @@ export default function Home() {
     </PageWrapper>
   )
 }
+
+export default Home

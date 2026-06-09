@@ -1,17 +1,14 @@
-import BackgroundCandles from '../effects/BackgroundCandles'
-import FilmGrain from '../effects/FilmGrain'
 import NavBar from './NavBar'
 import Footer from './Footer'
 
-export default function AppShell({ children }) {
+const AppShell = (props) => {
   return (
-    <div className="relative min-h-screen bg-wine-gradient">
-      <BackgroundCandles />
-      <FilmGrain opacity={0.05} />
-
+    <div className="min-h-screen bg-pink-50">
       <NavBar />
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10">{props.children}</div>
       <Footer />
     </div>
   )
 }
+
+export default AppShell

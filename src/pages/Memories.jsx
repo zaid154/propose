@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import PageWrapper from '../components/ui/PageWrapper'
 import Section from '../components/ui/Section'
@@ -7,67 +7,77 @@ import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
 import Lightbox from '../components/ui/Lightbox'
 import { getGalleryImages } from '../config/images'
-import { useStaggerContainer, revealVariants } from '../hooks/useScrollReveal'
+import { getStaggerAnimation, itemVariant } from '../hooks/useScrollReveal'
 
-function GalleryItem({ src, index, onOpen }) {
+const GalleryItem = (props) => {
   return (
     <motion.button
       type="button"
-      variants={revealVariants}
-      onClick={onOpen}
-      className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-ivory/10 bg-ivory/[0.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-roseGoldLight"
-      aria-label={`Open memory ${index + 1}`}
+      variants={itemVariant}
+      onClick={props.onOpen}
+      className="overflow-hidden rounded-lg border border-pink-100 hover:shadow-md transition"
+      aria-label={`Open memory ${props.index + 1}`}
     >
       <img
-        src={src}
-        alt={`Memory ${index + 1}`}
+        src={props.src}
+        alt={`Memory ${props.index + 1}`}
         loading="lazy"
-        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+        className="aspect-square w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-wine/70 via-wine/0 to-wine/0 opacity-90 transition-opacity duration-300 group-hover:opacity-70" />
-      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-4 text-[10px] uppercase tracking-[0.35em] text-ivory/80">
-        <span>moment</span>
-        <span>{String(index + 1).padStart(2, '0')}</span>
-      </div>
-      <span className="pointer-events-none absolute inset-0 rounded-2xl ring-0 ring-roseGoldLight/0 transition-all duration-300 group-hover:ring-2 group-hover:ring-roseGoldLight/40" />
     </motion.button>
   )
 }
 
-export default function Memories() {
-  const images = useMemo(() => getGalleryImages(), [])
-  const [openIndex, setOpenIndex] = useState(null)
-  const stagger = useStaggerContainer()
+const Memories = () => {
+  const images = getGalleryImages()
+  const [selectedImage, setSelectedImage] = useState(null)
+  const stagger = getStaggerAnimation()
 
-  const close = () => setOpenIndex(null)
-  const next = () =>
-    setOpenIndex((idx) => (idx == null ? 0 : (idx + 1) % images.length))
-  const prev = () =>
-    setOpenIndex((idx) =>
-      idx == null ? 0 : (idx - 1 + images.length) % images.length,
-    )
+  function openImage(index) {
+    setSelectedImage(index)
+  }
+
+  function closeImage() {
+    setSelectedImage(null)
+  }
+
+  function nextImage() {
+    if (selectedImage === null) {
+      setSelectedImage(0)
+      return
+    }
+    const next = (selectedImage + 1) % images.length
+    setSelectedImage(next)
+  }
+
+  function prevImage() {
+    if (selectedImage === null) {
+      setSelectedImage(0)
+      return
+    }
+    const prev = (selectedImage - 1 + images.length) % images.length
+    setSelectedImage(prev)
+  }
 
   return (
     <PageWrapper>
-      <Section className="py-16 sm:py-24" size="lg">
+      <Section className="pt-6 pb-12" size="lg">
         <div className="mx-auto max-w-3xl text-center">
           <Heading variant="eyebrow">Memories</Heading>
           <Heading variant="display" className="mt-3">
             Frames I keep close.
           </Heading>
-          <p className="mt-4 text-ivory/65">
+          <p className="mt-4 text-gray-600">
             A small collection. Select any photograph to view it larger.
           </p>
         </div>
 
         {images.length === 0 ? (
           <Card className="mx-auto mt-14 max-w-xl text-center">
-            <p className="font-display text-xl italic text-ivory/85">
-              No photographs yet.
-            </p>
-            <p className="mt-2 text-sm text-ivory/60">
+            <p className="font-display text-xl italic text-gray-800">No photographs yet.</p>
+            <p className="mt-2 text-sm text-gray-600">
               Drop images into{' '}
-              <code className="rounded bg-ivory/10 px-2 py-0.5 text-roseGoldLight">
+              <code className="rounded bg-pink-50 px-2 py-1 text-pink-600">
                 src/assets/images/
               </code>{' '}
               (jpg, png, webp) — they will appear here automatically.
@@ -75,15 +85,18 @@ export default function Memories() {
           </Card>
         ) : (
           <motion.div
-            {...stagger}
-            className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 lg:gap-6"
+            initial={stagger.initial}
+            whileInView={stagger.whileInView}
+            viewport={stagger.viewport}
+            variants={stagger.variants}
+            className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
           >
-            {images.map((src, idx) => (
+            {images.map((src, index) => (
               <GalleryItem
                 key={src}
                 src={src}
-                index={idx}
-                onOpen={() => setOpenIndex(idx)}
+                index={index}
+                onOpen={() => openImage(index)}
               />
             ))}
           </motion.div>
@@ -100,13 +113,15 @@ export default function Memories() {
       </Section>
 
       <Lightbox
-        isOpen={openIndex != null}
+        isOpen={selectedImage !== null}
         images={images}
-        index={openIndex ?? 0}
-        onClose={close}
-        onPrev={prev}
-        onNext={next}
+        index={selectedImage !== null ? selectedImage : 0}
+        onClose={closeImage}
+        onPrev={prevImage}
+        onNext={nextImage}
       />
     </PageWrapper>
   )
 }
+
+export default Memories

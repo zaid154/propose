@@ -1,12 +1,8 @@
-export default function Divider({ className = '' }) {
-  return (
-    <div
-      aria-hidden="true"
-      className={[
-        'h-px w-full',
-        'bg-gradient-to-r from-transparent via-roseGold/40 to-transparent',
-        className,
-      ].join(' ')}
-    />
-  )
+const Divider = (props) => {
+  const className = props.className || ''
+  const dividerClass = `border-t border-pink-200 w-full ${className}`
+
+  return <div aria-hidden="true" className={dividerClass} />
 }
+
+export default Divider
